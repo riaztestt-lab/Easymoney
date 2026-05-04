@@ -151,7 +151,7 @@
                         <i data-lucide="zap" class="w-5 h-5 text-purple-400"></i>
                     </div>
                     <p class="text-[10px] font-black uppercase tracking-widest">স্লট ১</p>
-                    <p id="slot1-timer-display" class="text-xs text-purple-400 font-black mt-1">+৳১০</p>
+                    <p id="slot1-timer-display" class="text-xs text-purple-400 font-black mt-1">+৳৩০</p>
                     <div class="mt-2 bg-black/40 px-2 py-1 rounded-full border border-white/5">
                          <p id="slot1-count" class="text-[7px] text-slate-400">Used: ০/১০</p>
                     </div>
@@ -161,7 +161,7 @@
                         <i data-lucide="flame" class="w-5 h-5 text-amber-500"></i>
                     </div>
                     <p class="text-[10px] font-black uppercase tracking-widest">স্লট ২</p>
-                    <p id="slot2-timer-display" class="text-xs text-amber-500 font-black mt-1">+৳১০</p>
+                    <p id="slot2-timer-display" class="text-xs text-amber-500 font-black mt-1">+৳৩০</p>
                     <div class="mt-2 bg-black/40 px-2 py-1 rounded-full border border-white/5">
                         <p id="slot2-count" class="text-[7px] text-slate-400">Used: ০/১০</p>
                     </div>
@@ -365,7 +365,7 @@
                         </div>
                         <div>
                             <p class="text-[11px] font-black uppercase text-white">বিজ্ঞাপন টাস্ক ${i}</p>
-                            <p class="text-[10px] text-purple-400 font-black">+৳১০.০০</p>
+                            <p class="text-[10px] text-purple-400 font-black">+৳৫০.০০</p>
                         </div>
                     </div>
                     <button id="task-btn-${i}" onclick="${isDone ? '' : `handleTask(${i})`}" 
@@ -390,8 +390,9 @@
                     let nT = userData.lastDate === today ? (userData.tasksDone || []) : [];
                     if(!nT.includes(id)) {
                         nT.push(id);
-                        await updateDoc(doc(db, "users", uid), { balance: increment(10), tasksDone: nT, lastDate: today });
-                        tg.showAlert("১০ টাকা যোগ হয়েছে।");
+                        // Updated to 50 TK
+                        await updateDoc(doc(db, "users", uid), { balance: increment(50), tasksDone: nT, lastDate: today });
+                        tg.showAlert("৫০ টাকা যোগ হয়েছে।");
                     }
                 }
             }, 1000);
@@ -405,12 +406,13 @@
                 show_10901138().then(() => {
                     tg.showAlert("বিজ্ঞাপন শেষে ১৫ সেকেন্ড অপেক্ষা করুন...");
                     let st = 15; const d = document.getElementById(`slot${slotId}-timer-display`);
-                    const timer = setInterval(() => { st--; d.innerText = st + "s"; if(st <= 0) { clearInterval(timer); d.innerText = "+৳১০"; } }, 1000);
+                    const timer = setInterval(() => { st--; d.innerText = st + "s"; if(st <= 0) { clearInterval(timer); d.innerText = "+৳৩০"; } }, 1000);
                     setTimeout(async () => {
-                        const upd = { balance: increment(10), lastDate: today };
+                        // Updated to 30 TK
+                        const upd = { balance: increment(30), lastDate: today };
                         upd[`ad${slotId}Count`] = userData.lastDate === today ? increment(1) : 1;
                         await updateDoc(doc(db, "users", uid), upd);
-                        tg.showAlert("১০ টাকা যোগ হয়েছে।");
+                        tg.showAlert("৩০ টাকা যোগ হয়েছে।");
                     }, 15000);
                 });
             }
